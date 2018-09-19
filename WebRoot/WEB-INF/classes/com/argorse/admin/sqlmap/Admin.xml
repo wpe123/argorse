@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Admin">
+
+	<typeAlias alias="Admin" type="com.argorse.admin.domain.Admin" />
+
+	<resultMap  id="AdminResult" class="Admin">
+		<result property="id" column="id" />
+		<result property="admin_name" column="admin_name" />
+		<result property="admin_password" column="admin_password" />
+	</resultMap>
+
+	
+    
+	<select id="findAdminByName" resultClass="Admin" parameterClass="String">
+		select * from admin where admin_name=#admin_name#
+	</select>
+	
+	<update id="updateAdmin" parameterClass="Admin">
+		update admin set admin_name=#admin_name#,admin_password=#admin_password#
+		where id=#id#
+	</update>
+	
+	
+</sqlMap>

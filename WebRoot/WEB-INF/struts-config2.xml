@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <form-beans>	  
+	   <form-bean name="imageForm" type="com.argorse.news.domain.ImageForm"></form-bean>
+  </form-beans>
+  
+  <action-mappings>
+  		<action 
+			    path="/news" 
+			    name="imageForm"
+				type="com.argorse.news.action.NewsAction"
+				parameter="method">
+				<forward name="toNewsList" path="/manage/news/newsList.jsp"></forward>
+				<forward name="toNewsDetail" path="/manage/news/newsDetail.jsp"></forward>
+				<forward name="addsucc" path="/news.do?method=selectNews"></forward>
+				<forward name="toNewkuDetail" path="/manage/news/newsDetail.jsp"></forward>
+				<forward name="updatesucc" path="/news.do?method=selectNews"></forward>
+				<forward name="delsucc" path="/news.do?method=selectNews"></forward>
+				<forward name="toForwardNewsList" path="/index.jsp"></forward>
+				<forward name="toForwardNewsDetail" path="/news.jsp"></forward>
+				<forward name="toForwardNewsShow" path="/forward/news/shownewsItem.jsp"></forward>
+				<forward name="toshowNewsImg" path="/manage/news/shownewsImg.jsp"></forward>
+			</action>
+			
+			<action 
+			    path="/customer" 
+				type="com.argorse.customer.action.CustomerAction"
+				parameter="method">
+				<forward name="toCustomerList" path="/manage/customer/customerList.jsp"></forward>
+				<forward name="addsucc" path="/customer.do?method=selectCustomer"></forward>
+				<forward name="toCustomerDetail" path="/manage/customer/customerDetail.jsp"></forward>
+				<forward name="updatesucc" path="/customer.do?method=selectCustomer"></forward>
+				<forward name="delsucc" path="/customer.do?method=selectCustomer"></forward>
+				<forward name="toForwardCustomerList" path="/forward/customer/customerList.jsp"></forward>
+				<forward name="asksucc" path="/customer.do?method=selectCustomerToList"></forward>
+			</action>
+  </action-mappings>
+  <message-resources parameter="com.yourcompany.struts.ApplicationResources" />
+</struts-config>
+

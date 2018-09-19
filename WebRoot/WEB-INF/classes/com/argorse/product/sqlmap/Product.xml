@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Product">
+
+	<typeAlias alias="Product" type="com.argorse.product.domain.Product" />
+
+	<resultMap  id="ProductResult" class="Product">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="createTime" column="createTime" />
+		<result property="updateTime" column="updateTime" />
+		<result property="path" column="path" />
+	</resultMap>
+
+	<insert id="addProduct" parameterClass="Product">
+		insert into Product (id,title,content,createTime,updateTime,path)
+		values(#id#,#title#,#content#,#createTime#,#updateTime#,#path#)
+	</insert>
+    
+	<select id="findAllProduct" resultMap="ProductResult">
+		select *
+		from product  order by createTime desc
+	</select>
+	<delete id="delProductById" parameterClass="String" >
+		delete from Product where id=#id#
+	</delete>
+	<update id="updateProduct" parameterClass="Product">
+		update Product set
+		<dynamic prepend=" ">
+			<isNotEmpty prepend="," property="title">
+				title =#title#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="content">
+				content=#content#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="updateTime">
+				updateTime=#updateTime#
+			</isNotEmpty>
+			<isNotEmpty  prepend="," property="path">
+				 path=#path#
+			</isNotEmpty>
+		</dynamic>
+		where id=#id#
+	</update>
+	<select id="findProductById" parameterClass="String" resultClass="Product">
+		select *
+		from Product
+		where id = #id#
+	</select>
+	
+</sqlMap>

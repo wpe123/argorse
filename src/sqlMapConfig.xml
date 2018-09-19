@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE sqlMapConfig PUBLIC "-//iBATIS.com//DTD SQL Map Config 2.0//EN" "http://www.ibatis.com/dtd/sql-map-config-2.dtd">
+<sqlMapConfig>
+ <settings
+   cacheModelsEnabled="true"
+   enhancementEnabled="true"  
+   useStatementNamespaces="true"
+  maxSessions="64"
+  maxTransactions="8"
+  maxRequests="128"/>
+ <transactionManager type="JDBC">
+   <dataSource type="SIMPLE">
+     <property value="com.mysql.jdbc.Driver" name="JDBC.Driver"/>
+     <property value="jdbc:mysql://localhost/test" name="JDBC.ConnectionURL"/>
+     <property value="root" name="JDBC.Username"/>
+     <property value="root" name="JDBC.Password"/>
+     <property value="15" name="Pool.MaximumActiveConnections"/>
+     <property value="15" name="Pool.MaximumIdleConnections"/>
+     <property value="1000" name="Pool.MaximumWait"/>
+   </dataSource>
+ </transactionManager>
+ 	<sqlMap resource="com/argorse/product/sqlmap/Product.xml"/>
+    <sqlMap resource="com/argorse/menu/sqlmap/Menu.xml"/>
+    <sqlMap resource="com/argorse/news/sqlmap/News.xml"/>
+ 	<sqlMap resource="com/argorse/customer/sqlmap/Customer.xml"/>
+ 	<sqlMap resource="com/argorse/article/sqlmap/Article.xml"/>
+ 	<sqlMap resource="com/argorse/admin/sqlmap/Admin.xml"/>
+ 
+</sqlMapConfig>
+

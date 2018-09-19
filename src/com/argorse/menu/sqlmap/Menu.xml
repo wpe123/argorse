@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Menu">
+
+	<typeAlias alias="Menu" type="com.argorse.menu.domain.Menu" />
+
+	<resultMap  id="MenuResult" class="Menu">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="pid" column="pid" />
+		<result property="level" column="level" />
+		<result property="isleaf" column="isleaf" />
+		<result property="orderby" column="orderby" />
+	</resultMap>
+
+	<insert id="addMenu" parameterClass="Menu">
+		insert into Menu (id,name,pid,level,isleaf)
+		values(#id#,#name#,#pid#,#level#,#isleaf#)
+	</insert>
+    <select id="findMenuById" parameterClass="String" resultMap="MenuResult">
+		select *
+		from menu  where id=#id#
+	</select>
+	<select id="findSecondMenusByPid" parameterClass="String" resultMap="MenuResult">
+		select *
+		from menu  where pid=#pid# order by orderby
+	</select>
+	<delete id="delMenuById" parameterClass="String" >
+		delete from menu where id=#id#
+	</delete>
+	
+	<update id="updateMenu" parameterClass="Menu">
+		update menu set
+		<dynamic prepend=" ">
+			<isNotEmpty prepend="," property="name">
+				name =#name#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="pid">
+				pid=#pid#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="level">
+				level=#level#
+			</isNotEmpty>
+			<isNotEmpty  prepend="," property="isleaf">
+				isleaf=#isleaf#
+			</isNotEmpty>
+			<isNotEmpty  prepend="," property="orderby">
+				orderby=#orderby#
+			</isNotEmpty>
+		</dynamic>
+		where id=#id#
+	</update>
+	<update id="updateMenuisleaf" parameterClass="Menu">
+		update menu set isleaf=#isleaf#
+		where id=#id#
+	</update>
+	<select id="findAllFirstMenus" resultClass="Menu">
+		select *
+		from menu
+		where level=1 order by orderby
+	</select>
+	
+</sqlMap>

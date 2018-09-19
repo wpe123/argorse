@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="Article">
+
+	<typeAlias alias="Article" type="com.argorse.article.domain.Article" />
+
+	<resultMap  id="ArticleResult" class="Article">
+		<result property="id" column="id" />
+		<result property="title" column="title" />
+		<result property="content" column="content" />
+		<result property="menuid" column="menuid" />
+		<result property="createtime" column="createtime" />
+		<result property="updatetime" column="updatetime" />
+		<result property="img_path" column="img_path" />
+	</resultMap>
+
+	<insert id="addArticle" parameterClass="Article">
+		insert into article (id,title,content,menuid,createtime,updatetime,img_path)
+		values(#id#,#title#,#content#,#menuid#,#createtime#,#updatetime#,#img_path#)
+	</insert>
+    
+	<select id="findAllArticle" resultMap="ArticleResult">
+		select * from article order by createtime
+	</select>
+	<delete id="delArticleById" parameterClass="String">
+		delete from article where id=#id#
+	</delete>
+	<update id="updateArticle" parameterClass="Article">
+	   update article set
+		<dynamic prepend=" ">
+			<isNotEmpty prepend="," property="title">
+				title =#title#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="content">
+				content=#content#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="menuid">
+				menuid=#menuid#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="updatetime">
+				updatetime=#updatetime#
+			</isNotEmpty>
+			<isNotEmpty  prepend="," property="img_path">
+				img_path=#img_path#
+			</isNotEmpty>
+		</dynamic>
+		where id=#id#
+	</update>
+	<select id="findArticleById" parameterClass="String" resultClass="Article">
+		select *
+		from article
+		where id = #id#
+	</select>
+	
+	<select id="findArticleByMenuid" parameterClass="String" resultClass="Article">
+		select *
+		from article
+		where menuid = #menuid#
+	</select>
+	<select id="selectArticleByMap" parameterClass="java.util.Map" resultClass="Article">
+		select a.id,a.title,a.content,a.menuid,a.createtime,a.updatetime,a.img_path
+		from article a,menu m 
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="title">
+				(title like '%$title$%') 
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="menuid">
+			    a.menuid like '%$menuid$%' or a.menuid in(select menu.id from menu where menu.pid like '%$menuid$%') 
+			</isNotEmpty>
+		</dynamic>
+		group by a.id
+	</select>
+</sqlMap>

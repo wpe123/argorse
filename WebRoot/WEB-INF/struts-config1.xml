@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+  <data-sources />
+  <form-beans>	  
+	   <form-bean name="imageForm" type="com.argorse.news.domain.ImageForm"></form-bean>
+  </form-beans>
+  <global-exceptions />
+  <global-forwards />
+  <action-mappings>
+  	<action path="/product"
+  			type="com.argorse.product.action.ProductAction"
+  			name="imageForm"
+  			parameter="cmd"
+  	>
+  		<forward name="addProduct" path="/product.do?cmd=findAllProduct"></forward>
+  		<forward name="showProducts" path="/manage/product/showProducts.jsp"></forward>
+  		<forward name="showProduct" path="/manage/product/showProduct.jsp"></forward>
+  		<forward name="delProductById" path="/product.do?cmd=findAllProduct"></forward>
+  		<forward name="showProductForUpdate" path="/manage/product/showProductForUpdate.jsp"></forward>
+  		<forward name="updateProduct" path="/product.do?cmd=findAllProduct"></forward>
+  		<forward name="showProductImg" path="/manage/product/showProductImg.jsp"></forward>
+  	</action>
+  	
+  	<action path="/menu"
+  			type="com.argorse.menu.action.MenuAction"
+  			parameter="cmd"
+  	>
+  		<forward name="firstMenus" path="/manage/menu/firstMenu.jsp"></forward>
+  		<forward name="addMenu" path="/menu.do?cmd=findFirstMenus"></forward>
+  		<forward name="delMenu" path="/menu.do?cmd=findFirstMenus"></forward>
+  		<forward name="updateMenu" path="/menu.do?cmd=findFirstMenus"></forward>
+  		<forward name="secondMenus" path="/manage/menu/secondMenu.jsp"></forward>
+  		<forward name="findSecondMenusByPid" path="/manage/menu/secondMenu.jsp"></forward>
+  		<forward name="orderbySecondMenu" path="/manage/menu/orderbySecondMenu.jsp"></forward>
+  	</action>
+  	
+  	<action path="/article"
+  			type="com.argorse.article.action.ArticleAction"
+  			parameter="cmd"
+  			name="imageForm"
+  	>
+  		<forward name="addAritcle" path="/manage/article/addArticle.jsp"></forward>
+  		<forward name="findAllArticles" path="/manage/article/articleList.jsp"></forward>
+  		<forward name="showArticle" path="/manage/article/showArticle.jsp"></forward>
+  		<forward name="delArticleById" path="/article.do?cmd=findAllArticles"></forward>
+  		<forward name="updatesucc" path="/article.do?cmd=findAllArticles"></forward>
+  		<forward name="showArticleForUpdate" path="/manage/article/showArticleForUpdate.jsp"></forward>
+  	</action>
+  	
+  	<action path="/admin"
+  			type="com.argorse.admin.action.AdminAction"
+  			parameter="cmd"
+  	>
+  		<forward name="success" path="/manage/index.jsp"></forward>
+  		<forward name="error" path="/login.html"></forward>
+  		<forward name="update" path="/manage/admin/adminInfo.jsp"></forward>
+  	</action>
+  </action-mappings>
+  <message-resources parameter="com.yourcompany.struts.ApplicationResources" />
+</struts-config>
+

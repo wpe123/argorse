@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Customer">
+
+	<typeAlias alias="customer" type="com.argorse.customer.domain.Customer" />
+
+	<select id="selectCustomer" resultClass="customer">
+		select
+		customer.id,customer.cname,customer.content,customer.address,customer.tel
+		from customer
+	</select>
+
+	<select id="selectCustomerById" parameterClass="java.lang.String"
+		resultClass="customer">
+		select
+		customer.id,customer.cname,customer.content,customer.address,customer.tel
+		from customer where id=#id#
+	</select>
+
+	<insert id="insertCustomer" parameterClass="customer">
+		insert into
+		customer(id,cname,content,address,tel)
+		values(#id#,#cname#,#content#,#address#,#tel#)
+	</insert>
+
+	<delete id="delCustomer" parameterClass="java.lang.String">
+		delete from customer where id = #id#
+	</delete>
+
+	<insert id="updateCustomer" parameterClass="customer">
+		update customer set
+		cname=#cname#,content=#content#,address=#address#,tel=#tel#
+		where id=#id#
+	</insert>
+</sqlMap>

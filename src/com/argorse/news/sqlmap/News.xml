@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="News">
+
+	<typeAlias alias="news" type="com.argorse.news.domain.News" />
+
+	<select id="selectNews" resultClass="news">
+		select
+		news.id,news.title,news.content,news.createtime,news.updatetime,img_path
+		from news group by updatetime desc
+	</select>
+
+	<select id="selectNewsById" parameterClass="java.lang.String"
+		resultClass="news">
+		select
+		news.id,news.title,news.content,news.createtime,news.updatetime,img_path
+		from news where id=#id#
+	</select>
+
+	<insert id="insertNews" parameterClass="news">
+		insert into
+		news(id,title,content,createtime,updatetime,img_path)
+		values(#id#,#title#,#content#,#createtime#,#updatetime#,#img_path#)
+	</insert>
+
+	<delete id="delNews" parameterClass="java.lang.String">
+		delete from news where id = #id#
+	</delete>
+
+	<update id="updateNews" parameterClass="news">
+		update news set
+		<dynamic prepend=" ">
+			<isNotEmpty prepend="," property="title">
+				title =#title#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="content">
+				content=#content#
+			</isNotEmpty>
+			<isNotEmpty prepend="," property="updatetime">
+				updatetime=#updatetime#
+			</isNotEmpty>
+			<isNotEmpty  prepend="," property="img_path">
+				img_path=#img_path#
+			</isNotEmpty>
+		</dynamic>
+		where id=#id#
+	</update>
+	
+	<select id="selectNewsByMap" parameterClass="java.util.Map" resultClass="news">
+		select * from news
+		<dynamic prepend="where">
+			<isNotEmpty prepend="and" property="title">
+				(title like '%$title$%') 
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="begintime">
+				<![CDATA[ updatetime >= #begintime# ]]> 
+			</isNotEmpty>
+			<isNotEmpty prepend="and" property="endtime">
+				<![CDATA[ updatetime <= #endtime# ]]> 
+			</isNotEmpty>
+		</dynamic>
+		group by updatetime desc
+	</select>
+</sqlMap>
